@@ -1,0 +1,25 @@
+name: Matrix Json
+on:
+  pull_request:
+  push:
+
+
+jobs:
+  play-matrix-games:
+    runs-on: ubuntu-latest
+    strategy:
+        matrix:
+          terraform:
+            - "1.6.*"
+          action-operator:
+          - {cloud: lxd, channel: "5.19", juju: "2.9"}
+          - {cloud: lxd, channel: "5.19", juju: "3.1"}
+          - {cloud: microk8s, channel: "1.28", juju: "2.9"}
+          - {cloud: microk8s, channel: "1.28-strict", juju: "3.1"}
+    steps:
+      - run: |
+          echo ${{ matrix.terraform }}
+      - run: |
+          echo ${{ matrix.action-operator.cloud }}
+          echo ${{ matrix.action-operator.channel }}
+          echo ${{ matrix.action-operator.juju }}
